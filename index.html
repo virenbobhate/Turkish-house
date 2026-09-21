@@ -1,0 +1,3564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>EMBER & OLIVE — Modern Restaurant</title>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+:root{
+  --bg:#ffffff;
+  --bg2:#ffffff;
+  --cream:#171717;
+  --gold:#b8892f;
+  --gold2:#c99a3a;
+  --muted:#666666;
+  --card:#ffffff;
+  --line:rgba(0,0,0,.10);
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  background:#ffffff;
+  color:#171717;
+  font-family:"Manrope",sans-serif;
+  overflow-x:hidden;
+}
+
+button,
+input,
+textarea{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+img{
+  max-width:100%;
+  display:block;
+}
+
+
+/* ================= NAVBAR ================= */
+
+.navbar{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:80px;
+  z-index:1000;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  padding:0 6%;
+
+  transition:.4s;
+
+  color:#171717;
+}
+
+.navbar.scrolled{
+  background:rgba(255,255,255,.94);
+  backdrop-filter:blur(15px);
+  border-bottom:1px solid var(--line);
+}
+
+.logo{
+  font-family:"DM Serif Display",serif;
+  font-size:28px;
+  letter-spacing:1px;
+}
+
+.logo span{
+  color:var(--gold);
+}
+
+.nav-links{
+  display:flex;
+  gap:35px;
+  list-style:none;
+}
+
+.nav-links a{
+  color:#171717;
+  text-decoration:none;
+  font-size:14px;
+  position:relative;
+}
+
+.nav-links a::after{
+  content:"";
+  position:absolute;
+  bottom:-7px;
+  left:0;
+  width:0;
+  height:2px;
+  background:var(--gold);
+  transition:.3s;
+}
+
+.nav-links a:hover::after{
+  width:100%;
+}
+
+.menu-toggle{
+  display:none;
+  background:none;
+  border:0;
+  color:#171717;
+  font-size:27px;
+}
+
+
+/* ================= HERO ================= */
+
+.hero{
+  min-height:100vh;
+  position:relative;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  text-align:center;
+
+  overflow:hidden;
+}
+
+.hero-bg{
+  position:absolute;
+  inset:-8%;
+
+  background:
+    linear-gradient(
+      rgba(255,255,255,.18),
+      rgba(0,0,0,.48)
+    ),
+    url("https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=2200&q=85")
+    center/cover;
+
+  transform:translateY(var(--parallax,0px)) scale(1.05);
+
+  transition:transform.1s linear;}
+
+
+.hero-content{
+  position:relative;
+  z-index:2;
+
+  max-width:900px;
+  padding:30px;
+
+  color:white;
+
+  animation:heroIn 1.2s ease both;
+}
+
+.eyebrow{
+  color:#f1c66a;
+
+  text-transform:uppercase;
+  letter-spacing:5px;
+
+  font-size:12px;
+  font-weight:700;
+
+  margin-bottom:20px;
+}
+
+.hero h1{
+  font-family:"DM Serif Display",serif;
+
+  font-size:clamp(65px,10vw,145px);
+
+  line-height:.9;
+
+  font-weight:400;
+}
+
+.hero p{
+  max-width:620px;
+
+  margin:30px auto;
+
+  color:#f1f1f1;
+
+  line-height:1.8;
+}
+
+.btn{
+  border:1px solid var(--gold);
+
+  background:var(--gold);
+
+  color:#171717;
+
+  padding:15px 28px;
+
+  border-radius:40px;
+
+  font-weight:800;
+
+  transition:.3s;
+
+  display:inline-block;
+
+  text-decoration:none;
+}
+
+.btn:hover{
+  transform:translateY(-4px);
+
+  box-shadow:
+    0 12px 30px rgba(184,137,47,.25);
+}
+
+.btn-outline{
+  background:transparent;
+
+  color:white;
+
+  margin-left:10px;
+}
+
+@keyframes heroIn{
+
+  from{
+    opacity:0;
+    transform:translateY(35px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+}
+
+
+/* ================= GENERAL ================= */
+
+section{
+  padding:110px 7%;
+}
+
+.section-head{
+  text-align:center;
+
+  margin-bottom:60px;
+}
+
+.section-head span{
+  color:var(--gold);
+
+  text-transform:uppercase;
+
+  letter-spacing:4px;
+
+  font-size:11px;
+
+  font-weight:800;
+}
+
+.section-head h2{
+  font-family:"DM Serif Display",serif;
+
+  font-size:58px;
+
+  font-weight:400;
+
+  margin-top:12px;
+
+  color:#171717;
+}
+
+.section-head p{
+  color:var(--muted);
+
+  max-width:600px;
+
+  margin:15px auto;
+
+  line-height:1.7;
+}
+
+
+/* ================= MENU ================= */
+
+.menu-section{
+  background:#ffffff;
+}
+
+.filters{
+  display:flex;
+
+  justify-content:center;
+
+  gap:10px;
+
+  flex-wrap:wrap;
+
+  margin-bottom:45px;
+}
+
+.filter{
+  padding:11px 20px;
+
+  border-radius:30px;
+
+  background:#ffffff;
+
+  border:1px solid #ddd6cc;
+
+  color:#555;
+}
+
+.filter.active,
+.filter:hover{
+  color:#171717;
+
+  background:var(--gold);
+
+  border-color:var(--gold);
+}
+
+.menu-grid{
+  display:grid;
+
+  grid-template-columns:
+    repeat(3,1fr);
+
+  gap:24px;
+}
+
+.dish-card{
+  background:#ffffff;
+
+  border:1px solid #e7e2da;
+
+  border-radius:22px;
+
+  overflow:hidden;
+
+  transition:.4s;
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,.05);
+}
+
+.dish-card:hover{
+  transform:translateY(-8px);
+
+  border-color:
+    rgba(184,137,47,.45);
+
+  box-shadow:
+    0 18px 45px rgba(0,0,0,.10);
+}
+
+.dish-img{
+  height:250px;
+
+  overflow:hidden;
+
+  position:relative;
+}
+
+.dish-img img{
+  width:100%;
+  height:100%;
+
+  object-fit:cover;
+
+  transition:.6s;
+}
+
+.dish-card:hover .dish-img img{
+  transform:scale(1.08);
+}
+
+.dish-info{
+  padding:24px;
+}
+
+.dish-top{
+  display:flex;
+
+  justify-content:space-between;
+
+  gap:15px;
+}
+
+.dish-name{
+  font-family:"DM Serif Display",serif;
+
+  font-size:27px;
+
+  color:#171717;
+}
+
+.price{
+  color:var(--gold2);
+
+  font-weight:800;
+}
+
+.dish-info p{
+  color:var(--muted);
+
+  font-size:14px;
+
+  line-height:1.6;
+
+  margin:12px 0 20px;
+}
+
+.try-btn{
+  width:100%;
+
+  padding:12px;
+
+  border-radius:12px;
+
+  border:
+    1px solid rgba(184,137,47,.5);
+
+  background:
+    rgba(184,137,47,.08);
+
+  color:#9a7020;
+
+  font-weight:800;
+
+  transition:.3s;
+}
+
+.try-btn:hover{
+  background:var(--gold);
+
+  color:#171717;
+}
+
+
+/* ================= ABOUT ================= */
+
+.about{
+  display:grid;
+
+  grid-template-columns:1fr 1fr;
+
+  gap:70px;
+
+  align-items:center;
+
+  background:#ffffff;
+}
+
+.about-image{
+  min-height:600px;
+
+  border-radius:25px;
+
+  background:
+    url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=85")
+    center/cover;
+}
+
+.about-copy span{
+  color:var(--gold);
+
+  text-transform:uppercase;
+
+  letter-spacing:4px;
+
+  font-size:11px;
+}
+
+.about-copy h2{
+  font-family:"DM Serif Display",serif;
+
+  font-size:65px;
+
+  font-weight:400;
+
+  line-height:1;
+
+  margin:15px 0 25px;
+
+  color:#171717;
+}
+
+.about-copy p{
+  color:var(--muted);
+
+  line-height:1.9;
+
+  margin-bottom:18px;
+}
+
+
+/* ================= GALLERY ================= */
+
+.gallery{
+  display:grid;
+
+  grid-template-columns:
+    repeat(4,1fr);
+
+  grid-auto-rows:250px;
+
+  gap:12px;
+}
+
+.gallery-item{
+  overflow:hidden;
+
+  border-radius:15px;
+
+  cursor:pointer;
+}
+
+.gallery-item:first-child{
+  grid-column:span 2;
+
+  grid-row:span 2;
+}
+
+.gallery-item img{
+  width:100%;
+  height:100%;
+
+  object-fit:cover;
+
+  transition:.5s;
+}
+
+.gallery-item:hover img{
+  transform:scale(1.08);
+}
+
+
+/* ================= CONTACT ================= */
+
+.contact{
+  background:#ffffff;
+}
+
+.contact-grid{
+  display:grid;
+
+  grid-template-columns:1fr 1fr;
+
+  gap:50px;
+}
+
+.contact-info h3{
+  font-family:"DM Serif Display",serif;
+
+  font-size:42px;
+
+  font-weight:400;
+
+  margin-bottom:25px;
+
+  color:#171717;
+}
+
+.contact-item{
+  margin:25px 0;
+}
+
+.contact-item small{
+  color:var(--gold);
+
+  text-transform:uppercase;
+
+  letter-spacing:2px;
+}
+
+.contact-item p{
+  color:var(--muted);
+
+  margin-top:6px;
+}
+
+.map{
+  min-height:350px;
+
+  border-radius:20px;
+
+  background:
+    linear-gradient(
+      rgba(10,8,6,.2),
+      rgba(10,8,6,.65)
+    ),
+    url("https://images.unsplash.com/photo-1523731407965-2430cd12f5e4?auto=format&fit=crop&w=1200&q=80")
+    center/cover;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+}
+
+.map span{
+  background:rgba(0,0,0,.7);
+
+  padding:15px 25px;
+
+  border-radius:30px;
+
+  color:white;
+}
+
+.contact-form{
+  display:grid;
+
+  gap:15px;
+
+  margin-top:30px;
+}
+
+.contact-form input,
+.contact-form textarea{
+
+  width:100%;
+
+  background:#ffffff;
+
+  border:1px solid #ddd6cc;
+
+  color:#171717;
+
+  border-radius:12px;
+
+  padding:15px;
+
+  outline:none;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus{
+  border-color:var(--gold);
+}
+
+.contact-form textarea{
+  min-height:130px;
+
+  resize:vertical;
+}
+
+
+/* ================= FOOTER ================= */
+
+footer{
+  padding:50px 7%;
+
+  border-top:1px solid #e7e2da;
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  gap:20px;
+
+  flex-wrap:wrap;
+
+  background:#ffffff;
+}
+
+footer p{
+  color:var(--muted);
+
+  font-size:13px;
+}
+
+.socials{
+  display:flex;
+
+  gap:12px;
+}
+
+.socials a{
+  width:38px;
+  height:38px;
+
+  border:1px solid #ddd6cc;
+
+  border-radius:50%;
+
+  display:grid;
+
+  place-items:center;
+
+  color:#171717;
+
+  text-decoration:none;
+
+  transition:.3s;
+}
+
+.socials a:hover{
+  background:var(--gold);
+
+  border-color:var(--gold);
+}
+
+
+/* ================= LIGHTBOX ================= */
+
+.lightbox{
+  position:fixed;
+
+  inset:0;
+
+  background:rgba(0,0,0,.9);
+
+  z-index:2000;
+
+  display:none;
+
+  place-items:center;
+
+  padding:30px;
+}
+
+.lightbox.show{
+  display:grid;
+}
+
+.lightbox img{
+  max-height:85vh;
+
+  max-width:90vw;
+
+  border-radius:15px;
+}
+
+.lightbox-close{
+  position:absolute;
+
+  top:25px;
+
+  right:30px;
+
+  font-size:35px;
+
+  background:none;
+
+  border:0;
+
+  color:white;
+}
+
+
+/* ================= GAME MODAL ================= */
+
+.game-overlay{
+  position:fixed;
+
+  inset:0;
+
+  background:rgba(0,0,0,.8);
+
+  backdrop-filter:blur(12px);
+
+  z-index:3000;
+
+  display:none;
+
+  align-items:center;
+
+  justify-content:center;
+
+  padding:15px;
+}
+
+.game-overlay.show{
+  display:flex;
+}
+
+.game-modal{
+  width:min(950px,100%);
+
+  max-height:94vh;
+
+  overflow:auto;
+
+  background:#17110d;
+
+  border:
+    1px solid rgba(217,164,65,.3);
+
+  border-radius:28px;
+
+  box-shadow:
+    0 30px 100px rgba(0,0,0,.7);
+
+  position:relative;
+
+  color:white;
+}
+
+.game-close{
+  position:absolute;
+
+  right:20px;
+
+  top:18px;
+
+  width:42px;
+  height:42px;
+
+  border-radius:50%;
+
+  background:rgba(0,0,0,.5);
+
+  color:white;
+
+  border:1px solid rgba(255,255,255,.1);
+
+  font-size:24px;
+
+  z-index:10;
+}
+
+.game-header{
+  text-align:center;
+
+  padding:35px 30px 20px;
+}
+
+.game-header small{
+  color:#d9a441;
+
+  text-transform:uppercase;
+
+  letter-spacing:3px;
+}
+
+.game-header h2{
+  font-family:"DM Serif Display",serif;
+
+  font-size:42px;
+
+  font-weight:400;
+
+  margin-top:8px;
+}
+
+.steps{
+  display:flex;
+
+  justify-content:center;
+
+  gap:7px;
+
+  padding:0 25px 25px;
+}
+
+.step-dot{
+  height:6px;
+
+  width:55px;
+
+  border-radius:20px;
+
+  background:#382c22;
+}
+
+.step-dot.active{
+  background:#d9a441;
+}
+
+.game-body{
+  padding:0 30px 35px;
+}
+
+.game-stage{
+  min-height:310px;
+
+  background:
+    radial-gradient(
+      circle at 50% 30%,
+      rgba(217,164,65,.08),
+      transparent 40%
+    ),
+    #0f0b09;
+
+  border:1px solid rgba(255,255,255,.1);
+
+  border-radius:22px;
+
+  display:flex;
+
+  flex-direction:column;
+
+  justify-content:center;
+
+  align-items:center;
+
+  padding:30px;
+
+  overflow:hidden;
+}
+
+.game-stage h3{
+  font-family:"DM Serif Display",serif;
+
+  font-size:30px;
+
+  margin-bottom:25px;
+}
+
+.options{
+  display:grid;
+
+  grid-template-columns:
+    repeat(auto-fit,minmax(130px,1fr));
+
+  width:100%;
+
+  gap:14px;
+}
+
+.option{
+  min-height:110px;
+
+  border:1px solid rgba(255,255,255,.1);
+
+  border-radius:15px;
+
+  background:#1d1511;
+
+  color:white;
+
+  padding:15px;
+
+  transition:.3s;
+}
+
+.option:hover{
+  border-color:#d9a441;
+
+  transform:translateY(-4px);
+}
+
+.option.selected{
+  border:2px solid #d9a441;
+
+  box-shadow:
+    0 0 25px rgba(217,164,65,.15);
+}
+
+.option-icon{
+  font-size:35px;
+
+  display:block;
+
+  margin-bottom:8px;
+}
+
+.game-controls{
+  display:flex;
+
+  justify-content:space-between;
+
+  margin-top:20px;
+}
+
+.game-controls button{
+  border:1px solid rgba(255,255,255,.1);
+
+  padding:12px 22px;
+
+  border-radius:30px;
+
+  background:transparent;
+
+  color:white;
+}
+
+.game-controls .next{
+  background:#d9a441;
+
+  color:#17110b;
+
+  border-color:#d9a441;
+
+  font-weight:800;
+}
+
+
+/* ================= PIZZA ================= */
+
+.pizza-scene{
+  width:290px;
+
+  height:230px;
+
+  position:relative;
+
+  perspective:800px;
+}
+
+.pizza{
+  width:210px;
+
+  height:210px;
+
+  border-radius:50%;
+
+  position:absolute;
+
+  left:40px;
+
+  top:8px;
+
+  transform:rotateX(58deg);
+
+  background:
+    radial-gradient(
+      circle at 45% 40%,
+      #e4bd65 0%,
+      #c8782c 62%,
+      #6f3216 100%
+    );
+
+  border:12px solid #8c4b20;
+
+  box-shadow:
+    0 14px 15px rgba(0,0,0,.5);
+
+  transition:.7s;
+}
+
+.pizza::before{
+  content:"";
+
+  position:absolute;
+
+  inset:17px;
+
+  border-radius:50%;
+
+  background:
+    radial-gradient(
+      circle at 40% 35%,
+      #ed6c39,
+      #bd3e21 70%
+    );
+
+  box-shadow:
+    inset 0 0 15px rgba(80,20,5,.5);
+}
+
+.pizza-cheese{
+  position:absolute;
+
+  inset:28px;
+
+  border-radius:50%;
+
+  background:
+    radial-gradient(
+      circle at 30% 30%,
+      #fff3a0,
+      #eabf42 70%
+    );
+
+  opacity:.9;
+}
+
+.bubble{
+  position:absolute;
+
+  border-radius:50%;
+
+  background:#fff2a0;
+
+  opacity:.7;
+
+  animation:
+    bubble 1.8s infinite ease-in-out;
+}
+
+@keyframes bubble{
+
+  0%,100%{
+    transform:scale(.8);
+    opacity:.4;
+  }
+
+  50%{
+    transform:scale(1.3);
+    opacity:.85;
+  }
+
+}
+
+.pepperoni{
+  position:absolute;
+
+  width:25px;
+
+  height:20px;
+
+  border-radius:48%;
+
+  background:#8e271a;
+
+  box-shadow:
+    inset 3px 2px 3px rgba(255,120,70,.35);
+}
+
+.char{
+  position:absolute;
+
+  width:7px;
+
+  height:7px;
+
+  border-radius:50%;
+
+  background:#3c1b0d;
+}
+
+
+/* ================= COOKING ================= */
+
+.cooking{
+  animation:
+    cookShake .5s infinite alternate;
+}
+
+@keyframes cookShake{
+
+  from{
+    transform:
+      rotateX(58deg)
+      rotateZ(-1deg);
+  }
+
+  to{
+    transform:
+      rotateX(58deg)
+      rotateZ(1deg);
+  }
+
+}
+
+.steam{
+  position:absolute;
+
+  bottom:180px;
+
+  width:3px;
+
+  height:80px;
+
+  border-radius:50%;
+
+  background:rgba(255,255,255,.25);
+
+  filter:blur(1px);
+
+  animation:
+    steam 2s infinite ease-out;
+}
+
+.steam:nth-child(2){
+  margin-left:60px;
+
+  animation-delay:.6s;
+}
+
+.steam:nth-child(3){
+  margin-left:-60px;
+
+  animation-delay:1.1s;
+}
+
+@keyframes steam{
+
+  0%{
+    opacity:0;
+
+    transform:
+      translateY(20px)
+      rotate(0);
+  }
+
+  40%{
+    opacity:.5;
+  }
+
+  100%{
+    opacity:0;
+
+    transform:
+      translateY(-70px)
+      rotate(15deg);
+  }
+
+}
+
+
+/* ================= RESULT ================= */
+
+.result{
+  text-align:center;
+}
+
+.result-visual{
+  font-size:100px;
+
+  margin:20px;
+
+  animation:
+    resultPop .7s ease;
+}
+
+@keyframes resultPop{
+
+  from{
+    opacity:0;
+
+    transform:
+      scale(.5)
+      rotate(-15deg);
+  }
+
+  to{
+    opacity:1;
+
+    transform:
+      scale(1)
+      rotate(0);
+  }
+
+}
+
+.result h3{
+  font-family:"DM Serif Display",serif;
+
+  font-size:35px;
+}
+
+.result p{
+  color:#bdb2a2;
+
+  line-height:1.7;
+
+  margin:12px auto 20px;
+
+  max-width:600px;
+}
+
+.order-summary{
+  padding:15px;
+
+  background:#211a15;
+
+  border-radius:15px;
+
+  margin:15px 0;
+
+  color:#ddd;
+}
+
+
+/* ================= REVEAL ================= */
+
+.reveal{
+  opacity:0;
+
+  transform:translateY(35px);
+
+  transition:1s;
+}
+
+.reveal.visible{
+  opacity:1;
+
+  transform:translateY(0);
+}
+
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:900px){
+
+  .menu-grid{
+    grid-template-columns:
+      repeat(2,1fr);
+  }
+
+  .about,
+  .contact-grid{
+    grid-template-columns:1fr;
+  }
+
+  .gallery{
+    grid-template-columns:
+      repeat(2,1fr);
+  }
+
+  .about-image{
+    min-height:400px;
+  }
+
+}
+
+
+@media(max-width:700px){
+
+  .navbar{
+    height:70px;
+  }
+
+  .nav-links{
+    position:absolute;
+
+    top:70px;
+
+    left:0;
+
+    width:100%;
+
+    background:#ffffff;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    padding:25px;
+
+    transform:translateY(-150%);
+
+    transition:.4s;
+
+    box-shadow:
+      0 10px 25px rgba(0,0,0,.08);
+  }
+
+  .nav-links.open{
+    transform:translateY(0);
+  }
+
+  .menu-toggle{
+    display:block;
+  }
+
+  .menu-grid{
+    grid-template-columns:1fr;
+  }
+
+  .section-head h2,
+  .about-copy h2{
+    font-size:46px;
+  }
+
+  .hero h1{
+    font-size:70px;
+  }
+
+  .hero .btn{
+    display:block;
+
+    width:100%;
+
+    margin:10px 0;
+  }
+
+  .gallery{
+    grid-template-columns:
+      1fr 1fr;
+
+    grid-auto-rows:170px;
+  }
+
+  .gallery-item:first-child{
+    grid-column:span 2;
+
+    grid-row:span 1;
+  }
+
+  .game-header h2{
+    font-size:34px;
+  }
+
+  .game-body{
+    padding:0 15px 25px;
+  }
+
+  .game-stage{
+    min-height:280px;
+
+    padding:20px 12px;
+  }
+
+  .options{
+    grid-template-columns:
+      repeat(2,1fr);
+  }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar" id="navbar">
+
+  <div class="logo">
+    EMBER<span>&</span>OLIVE
+  </div>
+
+  <button class="menu-toggle" id="menuToggle">
+    ☰
+  </button>
+
+  <ul class="nav-links" id="navLinks">
+
+    <li>
+      <a href="#home">Home</a>
+    </li>
+
+    <li>
+      <a href="#menu">Menu</a>
+    </li>
+
+    <li>
+      <a href="#about">About</a>
+    </li>
+
+    <li>
+      <a href="#gallery">Gallery</a>
+    </li>
+
+    <li>
+      <a href="#contact">Contact</a>
+    </li>
+
+  </ul>
+
+</nav>
+
+
+<!-- ================= HERO ================= -->
+
+<header class="hero" id="home">
+
+  <div class="hero-bg"></div>
+
+  <div class="hero-content">
+
+    <div class="eyebrow">
+      Fire • Flavor • Craft
+    </div>
+
+    <h1>
+      Taste<br>
+      The Tradition.
+    </h1>
+
+    <p>
+      A modern table built around slow cooking,
+      bold ingredients, and the simple pleasure
+      of sharing something delicious.
+    </p>
+
+    <a href="#menu" class="btn">
+      Explore Menu
+    </a>
+
+    <a href="#contact" class="btn btn-outline">
+      Reserve Table
+    </a>
+
+  </div>
+
+</header>
+
+
+<!-- ================= MENU ================= -->
+
+<section class="menu-section" id="menu">
+
+  <div class="section-head reveal">
+
+    <span>
+      Our Menu
+    </span>
+
+    <h2>
+      Made to be played with.
+    </h2>
+
+    <p>
+      Don't just order your food.
+      Build it. Try different combinations
+      and create your own dish.
+    </p>
+
+  </div>
+
+
+  <div class="filters">
+
+    <button
+      class="filter active"
+      data-filter="all">
+      All
+    </button>
+
+    <button
+      class="filter"
+      data-filter="pizza">
+      Pizza
+    </button>
+
+    <button
+      class="filter"
+      data-filter="pasta">
+      Pasta
+    </button>
+
+    <button
+      class="filter"
+      data-filter="salad">
+      Salad
+    </button>
+
+    <button
+      class="filter"
+      data-filter="dessert">
+      Dessert
+    </button>
+
+    <button
+      class="filter"
+      data-filter="drink">
+      Drinks
+    </button>
+
+  </div>
+
+
+  <div
+    class="menu-grid"
+    id="menuGrid">
+  </div>
+
+</section>
+
+
+<!-- ================= ABOUT ================= -->
+
+<section
+  class="about"
+  id="about">
+
+  <div class="about-image reveal"></div>
+
+  <div class="about-copy reveal">
+
+    <span>
+      Our Story
+    </span>
+
+    <h2>
+      Food should feel alive.
+    </h2>
+
+    <p>
+      Ember & Olive started with one simple idea:
+      take familiar food, respect its ingredients,
+      and give people a reason to experience it differently.
+    </p>
+
+    <p>
+      Our kitchen combines traditional techniques
+      with modern presentation. Every plate is prepared
+      to order, using ingredients selected for flavor
+      rather than fashion.
+    </p>
+
+    <a
+      href="#menu"
+      class="btn">
+      Discover The Menu
+    </a>
+
+  </div>
+
+</section>
+
+
+<!-- ================= GALLERY ================= -->
+
+<section id="gallery">
+
+  <div class="section-head reveal">
+
+    <span>
+      The Experience
+    </span>
+
+    <h2>
+      A table worth remembering.
+    </h2>
+
+  </div>
+
+
+  <div class="gallery">
+
+    <div class="gallery-item">
+
+      <img
+        src="https://images.unsplash.com/photo-1579684947550-22e945225d9a?auto=format&fit=crop&w=1200&q=85">
+
+    </div>
+
+
+    <div class="gallery-item">
+
+      <img
+        src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=900&q=85">
+
+    </div>
+
+
+    <div class="gallery-item">
+
+      <img
+        src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=900&q=85">
+
+    </div>
+
+
+    <div class="gallery-item">
+
+      <img
+        src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=900&q=85">
+
+    </div>
+
+
+    <div class="gallery-item">
+
+      <img
+        src="https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=900&q=85">
+
+    </div>
+
+
+    <div class="gallery-item">
+
+      <img
+        src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=900&q=85">
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= CONTACT ================= -->
+
+<section
+  class="contact"
+  id="contact">
+
+  <div class="section-head reveal">
+
+    <span>
+      Come Visit
+    </span>
+
+    <h2>
+      Let's make dinner.
+    </h2>
+
+  </div>
+
+
+  <div class="contact-grid">
+
+    <div class="contact-info">
+
+      <h3>
+        Find your way to us.
+      </h3>
+
+
+      <div class="contact-item">
+
+        <small>
+          Address
+        </small>
+
+        <p>
+          24 Heritage Street,
+          Mumbai, Maharashtra
+        </p>
+
+      </div>
+
+
+      <div class="contact-item">
+
+        <small>
+          Phone
+        </small>
+
+        <p>
+          +91 98765 43210
+        </p>
+
+      </div>
+
+
+      <div class="contact-item">
+
+        <small>
+          Email
+        </small>
+
+        <p>
+          hello@emberandolive.com
+        </p>
+
+      </div>
+
+
+      <div class="contact-item">
+
+        <small>
+          Opening Hours
+        </small>
+
+        <p>
+          Monday – Thursday: 12 PM – 11 PM
+          <br>
+          Friday – Sunday: 12 PM – 12 AM
+        </p>
+
+      </div>
+
+
+      <form
+        class="contact-form"
+        id="contactForm">
+
+        <input
+          id="customerName"
+          type="text"
+          placeholder="Your name"
+          required>
+
+
+        <input
+          id="customerEmail"
+          type="email"
+          placeholder="Your email"
+          required>
+
+
+        <textarea
+          id="customerMessage"
+          placeholder="Message / Order details">
+        </textarea>
+
+
+        <button
+          class="btn"
+          type="submit">
+
+          Send Message
+
+        </button>
+
+      </form>
+
+    </div>
+
+
+    <div class="map">
+
+      <span>
+        📍 Ember & Olive
+      </span>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+  <p>
+    © 2026 Ember & Olive.
+    Crafted with fire.
+  </p>
+
+  <div class="socials">
+
+    <a href="#">
+      IG
+    </a>
+
+    <a href="#">
+      FB
+    </a>
+
+    <a href="#">
+      X
+    </a>
+
+  </div>
+
+</footer>
+
+
+<!-- ================= LIGHTBOX ================= -->
+
+<div
+  class="lightbox"
+  id="lightbox">
+
+  <button
+    class="lightbox-close"
+    id="lightboxClose">
+    ×
+  </button>
+
+  <img
+    id="lightboxImage">
+
+</div>
+
+
+<!-- ================= GAME MODAL ================= -->
+
+<div
+  class="game-overlay"
+  id="gameOverlay">
+
+  <div class="game-modal">
+
+    <button
+      class="game-close"
+      id="gameClose">
+      ×
+    </button>
+
+
+    <div class="game-header">
+
+      <small id="gameCategory">
+        Build Your Dish
+      </small>
+
+      <h2 id="gameTitle">
+        Create Your Dish
+      </h2>
+
+    </div>
+
+
+    <div
+      class="steps"
+      id="stepIndicator">
+    </div>
+
+
+    <div class="game-body">
+
+      <div
+        class="game-stage"
+        id="gameStage">
+      </div>
+
+
+      <div class="game-controls">
+
+        <button id="backBtn">
+          ← Back
+        </button>
+
+        <button
+          class="next"
+          id="nextBtn">
+          Next →
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+
+/* =========================================================
+   DISH DATABASE
+========================================================= */
+
+const dishes = [
+
+  {
+    id:"pizza",
+
+    type:"pizza",
+
+    category:"pizza",
+
+    name:"Ember Margherita",
+
+    price:299,
+
+    image:
+      "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=900&q=85",
+
+    description:
+      "San Marzano tomato, mozzarella, basil and olive oil.",
+
+    steps:[
+
+      {
+        title:"Choose your base",
+
+        options:[
+
+          ["🍕","Thin Crust",30],
+
+          ["🧀","Cheese Burst",60],
+
+          ["🌾","Whole Wheat",40]
+
+        ]
+
+      },
+
+      {
+        title:"Choose your sauce",
+
+        options:[
+
+          ["🍅","Classic Tomato",0],
+
+          ["🌶️","Spicy Arrabbiata",20],
+
+          ["🧄","Garlic Cream",30]
+
+        ]
+
+      },
+
+      {
+        title:"Choose toppings",
+
+        multi:true,
+
+        options:[
+
+          ["🧀","Extra Mozzarella",40],
+
+          ["🍄","Mushrooms",35],
+
+          ["🌶️","Jalapeño",25],
+
+          ["🫑","Bell Pepper",25],
+
+          ["🫒","Olives",30],
+
+          ["🍅","Cherry Tomato",25]
+
+        ]
+
+      }
+
+    ]
+
+  },
+
+
+  {
+    id:"pasta",
+
+    type:"pasta",
+
+    category:"pasta",
+
+    name:"Truffle Pasta",
+
+    price:399,
+
+    image:
+      "https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=900&q=85",
+
+    description:
+      "Hand-finished pasta with creamy truffle sauce.",
+
+    steps:[
+
+      {
+        title:"Choose pasta",
+
+        options:[
+
+          ["🍝","Penne",0],
+
+          ["🍜","Spaghetti",20],
+
+          ["🥢","Fettuccine",30]
+
+        ]
+
+      },
+
+      {
+        title:"Choose sauce",
+
+        options:[
+
+          ["🥛","Creamy Truffle",70],
+
+          ["🍅","Arrabbiata",20],
+
+          ["🧀","Four Cheese",60]
+
+        ]
+
+      },
+
+      {
+        title:"Add mix-ins",
+
+        multi:true,
+
+        options:[
+
+          ["🍄","Mushrooms",40],
+
+          ["🍗","Grilled Chicken",80],
+
+          ["🥬","Spinach",30],
+
+          ["🌶️","Chilli",15]
+
+        ]
+
+      }
+
+    ]
+
+  },
+
+
+  {
+    id:"salad",
+
+    type:"salad",
+
+    category:"salad",
+
+    name:"Garden Bowl",
+
+    price:249,
+
+    image:
+      "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=900&q=85",
+
+    description:
+      "Fresh greens, vegetables and your choice of dressing.",
+
+    steps:[
+
+      {
+        title:"Choose your greens",
+
+        options:[
+
+          ["🥬","Lettuce",0],
+
+          ["🌿","Rocket",20],
+
+          ["🥬","Spinach",20]
+
+        ]
+
+      },
+
+      {
+        title:"Choose protein",
+
+        options:[
+
+          ["🥚","Egg",30],
+
+          ["🍗","Chicken",70],
+
+          ["🧀","Paneer",50]
+
+        ]
+
+      },
+
+      {
+        title:"Choose dressing",
+
+        options:[
+
+          ["🍋","Lemon Herb",20],
+
+          ["🥜","Peanut",25],
+
+          ["🧄","Garlic",25]
+
+        ]
+
+      },
+
+      {
+        title:"Add toppings",
+
+        multi:true,
+
+        options:[
+
+          ["🌽","Corn",20],
+
+          ["🥒","Cucumber",15],
+
+          ["🍅","Tomato",15],
+
+          ["🥜","Seeds",25]
+
+        ]
+
+      }
+
+    ]
+
+  },
+
+
+  {
+    id:"dessert",
+
+    type:"dessert",
+
+    category:"dessert",
+
+    name:"Chocolate Cloud",
+
+    price:229,
+
+    image:
+      "https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=900&q=85",
+
+    description:
+      "Warm chocolate dessert finished with your choice of garnish.",
+
+    steps:[
+
+      {
+        title:"Choose your base",
+
+        options:[
+
+          ["🍰","Chocolate Cake",0],
+
+          ["🥧","Tart Shell",20],
+
+          ["🍪","Cookie Base",15]
+
+        ]
+
+      },
+
+      {
+        title:"Choose topping",
+
+        options:[
+
+          ["🍫","Dark Chocolate",40],
+
+          ["🍓","Strawberry",35],
+
+          ["🍦","Vanilla Cream",30]
+
+        ]
+
+      },
+
+      {
+        title:"Choose garnish",
+
+        multi:true,
+
+        options:[
+
+          ["🥜","Hazelnuts",25],
+
+          ["🍓","Berries",30],
+
+          ["🍫","Chocolate Shavings",20]
+
+        ]
+
+      }
+
+    ]
+
+  },
+
+
+  {
+    id:"drink",
+
+    type:"drink",
+
+    category:"drink",
+
+    name:"Citrus Fizz",
+
+    price:179,
+
+    image:
+      "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=900&q=85",
+
+    description:
+      "Bright citrus, bubbles and a fresh aromatic garnish.",
+
+    steps:[
+
+      {
+        title:"Choose your base",
+
+        options:[
+
+          ["🍋","Lemon",0],
+
+          ["🍊","Orange",20],
+
+          ["🍍","Pineapple",30]
+
+        ]
+
+      },
+
+      {
+        title:"Choose mixer",
+
+        options:[
+
+          ["🥤","Soda",0],
+
+          ["🫧","Tonic",20],
+
+          ["🥤","Ginger Ale",25]
+
+        ]
+
+      },
+
+      {
+        title:"Choose garnish",
+
+        multi:true,
+
+        options:[
+
+          ["🍋","Lemon",10],
+
+          ["🌿","Mint",10],
+
+          ["🍊","Orange Peel",15]
+
+        ]
+
+      }
+
+    ]
+
+  }
+
+];
+
+
+/* =========================================================
+   MENU
+========================================================= */
+
+const menuGrid =
+  document.getElementById("menuGrid");
+
+
+function renderMenu(filter="all"){
+
+  menuGrid.innerHTML="";
+
+
+  const visible =
+    filter==="all"
+      ? dishes
+      : dishes.filter(
+          d=>d.category===filter
+        );
+
+
+  visible.forEach(dish=>{
+
+    const card =
+      document.createElement("article");
+
+
+    card.className="dish-card";
+
+
+    card.innerHTML=`
+
+      <div class="dish-img">
+
+        <img
+          src="${dish.image}"
+          alt="${dish.name}">
+
+      </div>
+
+
+      <div class="dish-info">
+
+        <div class="dish-top">
+
+          <div class="dish-name">
+            ${dish.name}
+          </div>
+
+          <div class="price">
+            ₹${dish.price}
+          </div>
+
+        </div>
+
+
+        <p>
+          ${dish.description}
+        </p>
+
+
+        <button class="try-btn">
+          ✨ Let's Try
+        </button>
+
+      </div>
+
+    `;
+
+
+    card
+      .querySelector(".try-btn")
+      .addEventListener(
+        "click",
+        ()=>openDishGame(dish)
+      );
+
+
+    menuGrid.appendChild(card);
+
+  });
+
+}
+
+
+renderMenu();
+
+
+/* =========================================================
+   FILTER
+========================================================= */
+
+document
+  .querySelectorAll(".filter")
+  .forEach(button=>{
+
+    button.addEventListener(
+      "click",
+      ()=>{
+
+        document
+          .querySelectorAll(".filter")
+          .forEach(b=>
+            b.classList.remove("active")
+          );
+
+
+        button.classList.add("active");
+
+
+        renderMenu(
+          button.dataset.filter
+        );
+
+      }
+    );
+
+  });
+
+
+/* =========================================================
+   GAME ENGINE
+========================================================= */
+
+let currentDish=null;
+
+let currentStep=0;
+
+let selections=[];
+
+
+const overlay =
+  document.getElementById("gameOverlay");
+
+const gameStage =
+  document.getElementById("gameStage");
+
+const gameTitle =
+  document.getElementById("gameTitle");
+
+const gameCategory =
+  document.getElementById("gameCategory");
+
+const stepIndicator =
+  document.getElementById("stepIndicator");
+
+const nextBtn =
+  document.getElementById("nextBtn");
+
+const backBtn =
+  document.getElementById("backBtn");
+
+
+function openDishGame(dishConfig){
+
+  currentDish=dishConfig;
+
+  currentStep=0;
+
+  selections=[];
+
+
+  overlay.classList.add("show");
+
+  document.body.style.overflow="hidden";
+
+
+  gameTitle.textContent =
+    `Build ${dishConfig.name}`;
+
+
+  gameCategory.textContent =
+
+    dishConfig.type==="pizza"
+      ? "Pizza Studio"
+
+    : dishConfig.type==="pasta"
+      ? "Pasta Kitchen"
+
+    : dishConfig.type==="salad"
+      ? "Salad Bar"
+
+    : dishConfig.type==="dessert"
+      ? "Dessert Studio"
+
+    : "Drink Lab";
+
+
+  renderGameStep();
+
+}
+
+
+function renderGameStep(){
+
+  const step =
+    currentDish.steps[currentStep];
+
+
+  stepIndicator.innerHTML="";
+
+
+  currentDish.steps.forEach(
+    (_,index)=>{
+
+      const dot =
+        document.createElement("div");
+
+
+      dot.className =
+        "step-dot "+
+        (index<=currentStep
+          ? "active"
+          : "");
+
+
+      stepIndicator.appendChild(dot);
+
+    }
+  );
+
+
+  gameStage.innerHTML=`
+
+    <h3>
+      ${step.title}
+    </h3>
+
+    <div class="options"></div>
+
+  `;
+
+
+  const optionsContainer =
+    gameStage.querySelector(".options");
+
+
+  const previous =
+    selections[currentStep] || [];
+
+
+  step.options.forEach(
+    (option,index)=>{
+
+      const [icon,name,price] =
+        option;
+
+
+      const button =
+        document.createElement("button");
+
+
+      button.className="option";
+
+
+      if(
+        previous.includes(index) ||
+        (
+          !step.multi &&
+          previous[0]===index
+        )
+      ){
+
+        button.classList.add(
+          "selected"
+        );
+
+      }
+
+
+      button.innerHTML=`
+
+        <span class="option-icon">
+          ${icon}
+        </span>
+
+        <strong>
+          ${name}
+        </strong>
+
+        <small>
+          ${
+            price>0
+              ? "+₹"+price
+              : "Included"
+          }
+        </small>
+
+      `;
+
+
+      button.addEventListener(
+        "click",
+        ()=>{
+
+          if(step.multi){
+
+            let selected =
+              selections[currentStep]
+              || [];
+
+
+            if(
+              selected.includes(index)
+            ){
+
+              selected =
+                selected.filter(
+                  i=>i!==index
+                );
+
+            }else{
+
+              selected.push(index);
+
+            }
+
+
+            selections[currentStep] =
+              selected;
+
+
+            button.classList.toggle(
+              "selected",
+              selected.includes(index)
+            );
+
+          }
+
+          else{
+
+            selections[currentStep] =
+              [index];
+
+
+            optionsContainer
+              .querySelectorAll(".option")
+              .forEach(
+                b=>
+                  b.classList.remove(
+                    "selected"
+                  )
+              );
+
+
+            button.classList.add(
+              "selected"
+            );
+
+          }
+
+        }
+      );
+
+
+      optionsContainer.appendChild(
+        button
+      );
+
+    }
+  );
+
+
+  backBtn.style.visibility =
+    currentStep===0
+      ? "hidden"
+      : "visible";
+
+
+  nextBtn.textContent =
+    currentStep===
+    currentDish.steps.length-1
+      ? "Cook It 🔥"
+      : "Next →";
+
+}
+
+
+/* =========================================================
+   NEXT
+========================================================= */
+
+nextBtn.addEventListener(
+  "click",
+  ()=>{
+
+    const step =
+      currentDish.steps[currentStep];
+
+
+    if(
+      !selections[currentStep] ||
+      selections[currentStep].length===0
+    ){
+
+      gameStage.animate(
+        [
+          {transform:"translateX(-5px)"},
+          {transform:"translateX(5px)"},
+          {transform:"translateX(0)"}
+        ],
+        {
+          duration:250
+        }
+      );
+
+      return;
+
+    }
+
+
+    if(
+      currentStep<
+      currentDish.steps.length-1
+    ){
+
+      currentStep++;
+
+      renderGameStep();
+
+    }
+
+    else{
+
+      startCooking();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   BACK
+========================================================= */
+
+backBtn.addEventListener(
+  "click",
+  ()=>{
+
+    if(currentStep>0){
+
+      currentStep--;
+
+      renderGameStep();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   COOKING
+========================================================= */
+
+function startCooking(){
+
+  gameStage.innerHTML="";
+
+
+  const type =
+    currentDish.type;
+
+
+  if(type==="pizza"){
+
+    pizzaCooking();
+
+  }
+
+  else if(type==="pasta"){
+
+    pastaCooking();
+
+  }
+
+  else if(type==="salad"){
+
+    saladCooking();
+
+  }
+
+  else if(type==="dessert"){
+
+    dessertCooking();
+
+  }
+
+  else{
+
+    drinkCooking();
+
+  }
+
+
+  nextBtn.style.display="none";
+
+  backBtn.style.display="none";
+
+}
+
+
+function pizzaCooking(){
+
+  gameStage.innerHTML=`
+
+    <div class="pizza-scene">
+
+      <div class="steam"></div>
+
+      <div class="steam"></div>
+
+      <div class="steam"></div>
+
+
+      <div class="pizza cooking">
+
+        <div class="pizza-cheese"></div>
+
+        ${createPepperoni()}
+
+        ${createChars()}
+
+      </div>
+
+    </div>
+
+
+    <h3 id="cookText">
+      Entering the oven...
+    </h3>
+
+  `;
+
+
+  const pizza =
+    gameStage.querySelector(".pizza");
+
+
+  let progress=0;
+
+
+  const timer =
+    setInterval(
+      ()=>{
+
+        progress+=10;
+
+
+        const cookText =
+          document.getElementById(
+            "cookText"
+          );
+
+
+        if(progress<40){
+
+          cookText.textContent =
+            "Heating the oven... 🔥";
+
+        }
+
+        else if(progress<75){
+
+          cookText.textContent =
+            "Cheese is melting... 🧀";
+
+        }
+
+        else{
+
+          cookText.textContent =
+            "Golden crust forming... ✨";
+
+        }
+
+
+        pizza.style.filter =
+          `saturate(${.6+progress/100})
+           brightness(${1-progress/600})`;
+
+
+        if(progress>=100){
+
+          clearInterval(timer);
+
+
+          pizza.classList.remove(
+            "cooking"
+          );
+
+
+          setTimeout(
+            showResult,
+            500
+          );
+
+        }
+
+      },
+      250
+    );
+
+}
+
+
+function createPepperoni(){
+
+  const positions=[
+
+    [55,35],
+    [120,55],
+    [85,110],
+    [145,125],
+    [50,145],
+    [115,25]
+
+  ];
+
+
+  return positions.map(
+    ([x,y])=>
+      `<span
+        class="pepperoni"
+        style="left:${x}px;top:${y}px">
+      </span>`
+  ).join("");
+
+}
+
+
+function createChars(){
+
+  const positions=[
+
+    [28,20],
+    [155,30],
+    [18,95],
+    [165,105],
+    [90,160],
+    [120,150],
+    [75,15]
+
+  ];
+
+
+  return positions.map(
+    ([x,y])=>
+      `<span
+        class="char"
+        style="left:${x}px;top:${y}px">
+      </span>`
+  ).join("");
+
+}
+
+
+function pastaCooking(){
+
+  gameStage.innerHTML=`
+
+    <div style="
+      font-size:110px;
+      animation:resultPop .7s ease infinite alternate;
+    ">
+      🍝
+    </div>
+
+    <h3 id="cookText">
+      Boiling pasta...
+    </h3>
+
+  `;
+
+
+  setTimeout(
+    ()=>{
+      document
+        .getElementById("cookText")
+        .textContent =
+        "Tossing with sauce... 🍅";
+    },
+    900
+  );
+
+
+  setTimeout(
+    ()=>{
+      document
+        .getElementById("cookText")
+        .textContent =
+        "Finishing the plate... ✨";
+    },
+    1800
+  );
+
+
+  setTimeout(
+    showResult,
+    2600
+  );
+
+}
+
+
+function saladCooking(){
+
+  gameStage.innerHTML=`
+
+    <div style="
+      font-size:110px;
+      animation:resultPop .7s ease infinite alternate;
+    ">
+      🥗
+    </div>
+
+    <h3 id="cookText">
+      Tossing fresh ingredients...
+    </h3>
+
+  `;
+
+
+  setTimeout(
+    ()=>{
+      document
+        .getElementById("cookText")
+        .textContent =
+        "Adding dressing...";
+    },
+    900
+  );
+
+
+  setTimeout(
+    ()=>{
+      document
+        .getElementById("cookText")
+        .textContent =
+        "Plating your salad...";
+    },
+    1700
+  );
+
+
+  setTimeout(
+    showResult,
+    2500
+  );
+
+}
+
+
+function dessertCooking(){
+
+  gameStage.innerHTML=`
+
+    <div style="
+      font-size:110px;
+      animation:resultPop .7s ease infinite alternate;
+    ">
+      🍰
+    </div>
+
+    <h3 id="cookText">
+      Warming your dessert...
+    </h3>
+
+  `;
+
+
+  setTimeout(
+    ()=>{
+      document
+        .getElementById("cookText")
+        .textContent =
+        "Adding the finishing touch...";
+    },
+    1000
+  );
+
+
+  setTimeout(
+    showResult,
+    2200
+  );
+
+}
+
+
+function drinkCooking(){
+
+  gameStage.innerHTML=`
+
+    <div style="
+      font-size:110px;
+      animation:resultPop .7s ease infinite alternate;
+    ">
+      🥤
+    </div>
+
+    <h3 id="cookText">
+      Mixing...
+    </h3>
+
+  `;
+
+
+  setTimeout(
+    ()=>{
+      document
+        .getElementById("cookText")
+        .textContent =
+        "Shaking with ice... 🧊";
+    },
+    800
+  );
+
+
+  setTimeout(
+    ()=>{
+      document
+        .getElementById("cookText")
+        .textContent =
+        "Pouring...";
+    },
+    1600
+  );
+
+
+  setTimeout(
+    showResult,
+    2400
+  );
+
+}
+
+
+/* =========================================================
+   RESULT
+========================================================= */
+
+function showResult(){
+
+  let total =
+    currentDish.price;
+
+
+  let names=[];
+
+
+  currentDish.steps.forEach(
+    (step,stepIndex)=>{
+
+      const selected =
+        selections[stepIndex] || [];
+
+
+      selected.forEach(
+        index=>{
+
+          const option =
+            step.options[index];
+
+
+          names.push(
+            option[1]
+          );
+
+
+          total +=
+            option[2];
+
+        }
+      );
+
+    }
+  );
+
+
+  const icon =
+
+    currentDish.type==="pizza"
+      ? "🍕"
+
+    : currentDish.type==="pasta"
+      ? "🍝"
+
+    : currentDish.type==="salad"
+      ? "🥗"
+
+    : currentDish.type==="dessert"
+      ? "🍰"
+
+    : "🥤";
+
+
+  gameStage.innerHTML=`
+
+    <div class="result">
+
+      <div class="result-visual">
+        ${icon}
+      </div>
+
+
+      <h3>
+        Your ${currentDish.name}
+      </h3>
+
+
+      <p>
+        Your custom creation is ready.
+        Every selection has been added
+        to your order.
+      </p>
+
+
+      <div class="order-summary">
+
+        ${names.join(" • ")}
+
+        <br><br>
+
+        <strong>
+          Total: ₹${total}
+        </strong>
+
+      </div>
+
+
+      <button
+        class="btn"
+        id="orderButton">
+
+        Order This — ₹${total}
+
+      </button>
+
+    </div>
+
+  `;
+
+
+  document
+    .getElementById("orderButton")
+    .addEventListener(
+      "click",
+      ()=>{
+
+        const message =
+
+          `I would like to order ${currentDish.name}. `+
+
+          `Customizations: ${names.join(", ")}. `+
+
+          `Total: ₹${total}.`;
+
+
+        document
+          .getElementById("customerMessage")
+          .value=message;
+
+
+        closeGame();
+
+
+        document
+          .getElementById("contact")
+          .scrollIntoView({
+            behavior:"smooth"
+          });
+
+      }
+    );
+
+}
+
+
+/* =========================================================
+   CLOSE GAME
+========================================================= */
+
+function closeGame(){
+
+  overlay.classList.remove("show");
+
+  document.body.style.overflow="";
+
+
+  nextBtn.style.display="";
+
+  backBtn.style.display="";
+
+}
+
+
+document
+  .getElementById("gameClose")
+  .addEventListener(
+    "click",
+    closeGame
+  );
+
+
+overlay.addEventListener(
+  "click",
+  e=>{
+
+    if(e.target===overlay){
+
+      closeGame();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+window.addEventListener(
+  "scroll",
+  ()=>{
+
+    const navbar =
+      document.getElementById(
+        "navbar"
+      );
+
+
+    navbar.classList.toggle(
+      "scrolled",
+      window.scrollY>60
+    );
+
+
+    const heroBg =
+      document.querySelector(
+        ".hero-bg"
+      );
+
+
+    if(heroBg){
+
+      heroBg.style.setProperty(
+        "--parallax",
+        `${window.scrollY*.25}px`
+      );
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   MOBILE NAV
+========================================================= */
+
+document
+  .getElementById("menuToggle")
+  .addEventListener(
+    "click",
+    ()=>{
+
+      document
+        .getElementById("navLinks")
+        .classList.toggle("open");
+
+    }
+  );
+
+
+document
+  .querySelectorAll(".nav-links a")
+  .forEach(
+    link=>{
+
+      link.addEventListener(
+        "click",
+        ()=>{
+
+          document
+            .getElementById("navLinks")
+            .classList.remove("open");
+
+        }
+      );
+
+    }
+  );
+
+
+/* =========================================================
+   GALLERY LIGHTBOX
+========================================================= */
+
+const lightbox =
+  document.getElementById(
+    "lightbox"
+  );
+
+
+const lightboxImage =
+  document.getElementById(
+    "lightboxImage"
+  );
+
+
+document
+  .querySelectorAll(
+    ".gallery-item img"
+  )
+  .forEach(
+    img=>{
+
+      img.addEventListener(
+        "click",
+        ()=>{
+
+          lightboxImage.src =
+            img.src;
+
+          lightbox.classList.add(
+            "show"
+          );
+
+        }
+      );
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "lightboxClose"
+  )
+  .addEventListener(
+    "click",
+    ()=>{
+
+      lightbox.classList.remove(
+        "show"
+      );
+
+    }
+  );
+
+
+lightbox.addEventListener(
+  "click",
+  e=>{
+
+    if(e.target===lightbox){
+
+      lightbox.classList.remove(
+        "show"
+      );
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   SCROLL REVEAL
+========================================================= */
+
+const observer =
+  new IntersectionObserver(
+    entries=>{
+
+      entries.forEach(
+        entry=>{
+
+          if(entry.isIntersecting){
+
+            entry.target.classList.add(
+              "visible"
+            );
+
+          }
+
+        }
+      );
+
+    },
+    {
+      threshold:.15
+    }
+  );
+
+
+document
+  .querySelectorAll(".reveal")
+  .forEach(
+    el=>observer.observe(el)
+  );
+
+
+/* =========================================================
+   CONTACT FORM
+========================================================= */
+
+document
+  .getElementById("contactForm")
+  .addEventListener(
+    "submit",
+    e=>{
+
+      e.preventDefault();
+
+
+      const name =
+        document.getElementById(
+          "customerName"
+        ).value;
+
+
+      alert(
+        `Thanks ${name}! Your message has been received.`
+      );
+
+    }
+  );
+
+</script>
+
+</body>
+</html>
